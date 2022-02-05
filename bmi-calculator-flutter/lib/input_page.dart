@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
-
-const bottomContainerHeight = 80.0;
-const activeCardColor= Color(0xFF1D1E33);
-const inactiveCardColor= Color(0xFF111328);
-const bottomContainerColor = Color(0xFFEB1555);
+import 'constants.dart';
 
 enum Gender {
   male,
@@ -20,10 +16,11 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
 
-  Color maleCardColor = inactiveCardColor;
-  Color femaleCardColor = inactiveCardColor;
+  Color maleCardColor = kinactiveCardColor;
+  Color femaleCardColor = kinactiveCardColor;
 
   Gender selectedGenger;
+  int height = 180;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +29,7 @@ class _InputPageState extends State<InputPage> {
         title: Text('BMI CALCULATOR'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children:<Widget> [
           Expanded(child: Row(
             children:<Widget>[
@@ -42,7 +40,7 @@ class _InputPageState extends State<InputPage> {
                         selectedGenger = Gender.male;
                       });
                     },
-                    color:selectedGenger == Gender.male ? activeCardColor:inactiveCardColor,
+                    color:selectedGenger == Gender.male ? kactiveCardColor:kinactiveCardColor,
                     cardChild:IconContent(
                       icon: FontAwesomeIcons.mars,
                       label: 'MALE',
@@ -56,7 +54,7 @@ class _InputPageState extends State<InputPage> {
                       selectedGenger = Gender.female;
                     });
                   },
-                  color:selectedGenger == Gender.female ? activeCardColor:inactiveCardColor,
+                  color:selectedGenger == Gender.female ? kactiveCardColor:kinactiveCardColor,
                     cardChild:IconContent(
                       icon: FontAwesomeIcons.venus,
                       label: 'FEMALE',
@@ -66,15 +64,50 @@ class _InputPageState extends State<InputPage> {
             ]
           )),
           Expanded(child:
-              ReusableCard(color:activeCardColor)
+              ReusableCard(
+                  color:kactiveCardColor,
+                  cardChild: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text('HEIGHT',style: klabelTextStyle,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Text(
+                              height.toString(),
+                            style:kNumberTextStyle
+                          ),
+                          Text(
+                              'cm',
+                              style:klabelTextStyle
+                          ),
+                        ],
+                      ),
+                      Slider(
+                          value: height.toDouble(),
+                          min: 20.0,
+                          max: 220.0,
+                          activeColor: Color(0xFFEB1555),
+                          inactiveColor: Color(0xFF8D8E98),
+                          onChanged: (double newValue){
+                            setState(() {
+                              height = newValue.round();
+                            });
+                          }
+                      ),
+                    ],
+                  ),
+              )
             ),
           Expanded(child:
-            ReusableCard(color:activeCardColor),
+            ReusableCard(color:kactiveCardColor),
           ),
           Container(
-            color: bottomContainerColor,
+            color: kbottomContainerColor,
             margin: EdgeInsets.only(top: 10),
-            height: bottomContainerHeight,
+            height: kbottomContainerHeight,
             width: double.infinity,
           )
         ],
