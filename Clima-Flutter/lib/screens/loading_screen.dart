@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clima/services/location.dart';
+import 'package:http/http.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -19,6 +20,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
     await locaiton.getCurrentLocation();
     print(locaiton.longitude);
     print(locaiton.latitude);
+    getData();
+  }
+  void getData() async{
+    Response response = await get(Uri.parse('http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=85f364c6573bf8de09d146383314a00b'));
+    print(response.body);
   }
 
   @override
