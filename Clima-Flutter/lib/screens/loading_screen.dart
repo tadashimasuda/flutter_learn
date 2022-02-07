@@ -4,6 +4,7 @@ import 'package:clima/services/location.dart';
 import 'package:http/http.dart' as http;
 import 'package:clima/services/networking.dart';
 import 'location_screen.dart';
+import 'package:clima/services/weather.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -21,15 +22,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
    void getLocationData() async {
-    Locaiton location = Locaiton();
-    await location.getCurrentLocation();
-    latitude = location.latitude;
-    longitude = location.longitude;
-
-    String url = 'http://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=85f364c6573bf8de09d146383314a00b&units=metric';
-    NetworkHelper networkHelper = NetworkHelper(url: url);
-
-    var weatherData = await networkHelper.getData();
+    var weatherData = await WeatherModel().getLocaitonData();
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return LocationScreen(
